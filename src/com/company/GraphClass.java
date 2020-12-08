@@ -2,52 +2,41 @@ package com.company;
 
 import java.util.LinkedList;
 
-class GraphClass extends ReadFiles {
+class GraphClass {
+    // send in a copy of the adjacency list of edges
+    // dijkstra's algorithm from point a to point b
+    // return the cities you will hit
+
+
     public GraphClass(int size) {
         super();
     }
 
-    static class Edge {
 
-        String initialVertex;
-        String secondVertex;
-        int miles;
-
-        public Edge(String initialVertex, String secondVertex, int miles) {
-            this.initialVertex = initialVertex;
-            this.secondVertex = secondVertex;
-            this.miles = miles;
-        }
-    }
 
     static class Graph {
-        int vertices;
-        LinkedList<Edge>[] adjacencyList;
 
-        Graph(int vertices) {
-            this.vertices = vertices;
-            adjacencyList = new LinkedList[vertices];
 
-            for (int i=0; i<vertices; i++) {
-                adjacencyList[i] = new LinkedList<>();
-            }
-        }
+//        Graph(int vertices) {
+//            this.vertices = vertices;
+//            adjacencyList = new LinkedList[vertices];
+//
+//            for (int i=0; i<vertices; i++) {
+//                adjacencyList[i] = new LinkedList<>();
+//            }
+//        }
 
-        public void addEdge(String initialVertex, String secondVertex, int miles) {
-            Edge edge = new Edge(initialVertex, secondVertex, miles);
-            adjacencyList[vertices].add(edge);
 
-        }
 
-        public void printGraph(){
-            for (int i = 0; i <vertices ; i++) {
-                LinkedList<Edge> list = adjacencyList[i];
-                for (int j = 0; j <list.size() ; j++) {
-                    System.out.println("vertex-" + i + " is connected to " +
-                            list.get(j).secondVertex + " with weight " +  list.get(j).miles);
-                }
-            }
-        }
+//        public void printGraph(){
+//            for (int i = 0; i <vertices ; i++) {
+//                LinkedList<Edge> list = adjacencyList[i];
+//                for (int j = 0; j <list.size() ; j++) {
+//                    System.out.println("vertex-" + i + " is connected to " +
+//                            list.get(j).secondVertex + " with weight " +  list.get(j).miles);
+//                }
+//            }
+//        }
     }
 
     /*
