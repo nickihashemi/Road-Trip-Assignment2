@@ -9,12 +9,15 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
+
+// TODO: MILES TOTAL IS NOT UPDATING
+// TODO: ATTRACTION NOT GETTING ADDED
+
 public class ReadFiles {
 
     ArrayList<String> verticesList = new ArrayList<>();
     LinkedList<Edge> edgeList = new LinkedList<Edge>();
     Hashtable<String, String> attractionsHashTable = new Hashtable<String, String>();
-
     Hashtable<String, List<String>> adjacencyList = new Hashtable<String, List<String>>();
 
     // roads.txt
@@ -25,7 +28,6 @@ public class ReadFiles {
     // attractions.txt
     String attraction;
     String location;
-
 
     static class Edge {
 
@@ -69,10 +71,7 @@ public class ReadFiles {
         return 0;
     }
 
-
-
     public void attractions() throws IOException {
-
 
         File attractionsFile = new File("/Users/nickihashemi/IdeaProjects/assignment2/src/com/company/attractions.txt");
         BufferedReader attractionsReader = new BufferedReader(new FileReader(attractionsFile));
@@ -89,9 +88,6 @@ public class ReadFiles {
     }
 
     public void roads() throws IOException {
-
-        //GraphClass graph = new GraphClass(verticesList.size());
-//        GraphClass.Edge edge = new GraphClass.Edge(initialVertex, secondVertex, miles);
 
         File roadsFile = new File("/Users/nickihashemi/IdeaProjects/assignment2/src/com/company/roads.txt");
         BufferedReader roadsReader = new BufferedReader(new FileReader(roadsFile));
@@ -144,20 +140,12 @@ public class ReadFiles {
         readFiles.roads();
 
         ArrayList attractions = new ArrayList();
-        attractions.add("Disney World");
+        //attractions.add("Disney World");
         attractions.add("Statue of Liberty");
 
         Dijkstra dijkstra = new Dijkstra(readFiles.verticesList, readFiles.edgeList, readFiles.adjacencyList, readFiles.attractionsHashTable);
         System.out.println();
         System.out.println("Path: " + dijkstra.route("Abilene TX", "Portland OR", attractions).toString());
-
-        //Dijkstra dijkstra = new Dijkstra();
-        //dijkstra.
-
-        // create a new list by calling the dijkstras
-        // call GraphClass(adjacencylist)
-        // List cities = new GraphClass(adjacencyList).apply(initial, second);
-
 
     }
 }

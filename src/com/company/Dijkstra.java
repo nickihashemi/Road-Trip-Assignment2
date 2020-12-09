@@ -1,6 +1,3 @@
-// A Java program for Dijkstra's single source shortest path algorithm.
-// The program is for adjacency matrix representation of the graph
-
 package com.company;
 import java.util.*;
 import java.lang.*;
@@ -11,17 +8,17 @@ import static java.lang.System.exit;
 public class Dijkstra {
 
     ReadFiles readFiles = new ReadFiles();
-    int V = readFiles.getAdjacencyList().size();
 
     Hashtable<String, Boolean> visited = new Hashtable<>();
     Hashtable<String, String> path = new Hashtable<>();         // initial city, previous city
     Hashtable<String, Integer> distance = new Hashtable<>();    // city, cost
-
     Hashtable<String, String> attractionsList = new Hashtable<String, String>();
 
     ArrayList<String> verticesList = new ArrayList<>();
     LinkedList<ReadFiles.Edge> edgeList = new LinkedList<ReadFiles.Edge>();
     Hashtable<String, List<String>> adjacencyList = new Hashtable<String, List<String>>();
+
+
 
     public Dijkstra(ArrayList<String> verticesList, LinkedList<ReadFiles.Edge> edgeList, Hashtable<String, List<String>> adjacencyList, Hashtable<String, String> attractionsList) {
         this.verticesList = verticesList;
@@ -81,23 +78,23 @@ public class Dijkstra {
 
         for (String a : attractions) {
             String location = attractionsList.get(a);
-            int dist = distance.get(location);
-            attractionDistances.add(dist);
-            distanceToLocation.put(dist, location);
+            int theDist = distance.get(location);
+            attractionDistances.add(theDist);
+            distanceToLocation.put(theDist, location);
         }
 
         Collections.sort(attractionDistances);
 
-        for (int dist : attractionDistances) {
-            visitOrder.add(distanceToLocation.get(dist));
+        for (int theDist : attractionDistances) {
+            visitOrder.add(distanceToLocation.get(theDist));
         }
 
         visitOrder.add(0, starting_city);
         visitOrder.add(ending_city);
 
-        int milesTotal = 0;
         Stack stack = new Stack();
 
+        int milesTotal = 0;
         for (int i=0; i<visitOrder.size()-1; i++) {
             String current = visitOrder.get(i);
             String nextLocation = visitOrder.get(i+1);
@@ -142,15 +139,7 @@ public class Dijkstra {
             }
         }
 
-        // print the constructed distance array
-//        printSolution(dist);
+        System.out.println("Total Miles: " + milesTotal);
         return cities;
-    }
-
-    public static void main(String[] args) {
-
-
-
-        //d.dijkstra(readFiles.getAdjacencyList(), 0);
     }
 }
