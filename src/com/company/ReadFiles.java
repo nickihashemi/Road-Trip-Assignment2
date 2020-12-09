@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ReadFiles {
 
-    ArrayList<String> verticesList = new ArrayList<>(10);
-    LinkedList<Edge> adjacencyList = new LinkedList<Edge>();
+    ArrayList<String> verticesList = new ArrayList<>();
+    LinkedList<Edge> edgeList = new LinkedList<Edge>();
+    Hashtable<String, String> attractionsHashTable = new Hashtable<String, String>();
 
+    Hashtable<String, List<String>> adjacencyList = new Hashtable<String, List<String>>();
 
     // roads.txt
     String initialVertex;
@@ -48,15 +51,28 @@ public class ReadFiles {
 
     public void addEdge(String initialVertex, String secondVertex, int miles) {
         Edge edge = new Edge(initialVertex, secondVertex, miles);
-        adjacencyList.add(edge);
+        edgeList.add(edge);
 
-//        Edge edge1 = new Edge(secondVertex, initialVertex, miles);
-//        adjacencyList.add(edge1);
-
+        Edge edge1 = new Edge(secondVertex, initialVertex, miles);
+        edgeList.add(edge1);
     }
 
+    public int weight(String first, String second) {
+        for (Edge edge : edgeList) {
+            if (edge.initialVertex.equals(first) && edge.secondVertex.equals(second)) {
+                return edge.miles;
+            }
+            if (edge.initialVertex.equals(second) && edge.secondVertex.equals(first)) {
+                return edge.miles;
+            }
+        }
+        return 0;
+    }
+
+
+
     public void attractions() throws IOException {
-        Hashtable<String, String> attractionsHashTable = new Hashtable<String, String>();
+
 
         File attractionsFile = new File("/Users/nickihashemi/IdeaProjects/assignment2/src/com/company/attractions.txt");
         BufferedReader attractionsReader = new BufferedReader(new FileReader(attractionsFile));
@@ -69,12 +85,12 @@ public class ReadFiles {
             attractionsHashTable.put(attraction, location);
         }
 
-        System.out.println("Mappings of attractions: " + attractionsHashTable.toString());
+        System.out.println("Attractions: " + attractionsHashTable.toString());
     }
 
     public void roads() throws IOException {
 
-        GraphClass graph = new GraphClass(verticesList.size());
+        //GraphClass graph = new GraphClass(verticesList.size());
 //        GraphClass.Edge edge = new GraphClass.Edge(initialVertex, secondVertex, miles);
 
         File roadsFile = new File("/Users/nickihashemi/IdeaProjects/assignment2/src/com/company/roads.txt");
@@ -87,6 +103,12 @@ public class ReadFiles {
             secondVertex = temp[1];
             miles = Integer.parseInt(temp[2]);
 
+            adjacencyList.putIfAbsent(initialVertex, new LinkedList<>());
+            adjacencyList.putIfAbsent(secondVertex, new LinkedList<>());
+            adjacencyList.get(initialVertex).add(secondVertex);
+            adjacencyList.get(secondVertex).add(initialVertex);
+
+
             if (!verticesList.contains(initialVertex)) {
                 verticesList.add(initialVertex);
             }
@@ -98,11 +120,21 @@ public class ReadFiles {
 
             addEdge(initialVertex, secondVertex, miles);
         }
-        System.out.println(adjacencyList);
+
+        System.out.println("Vertices: " + verticesList);
+        System.out.println("Edges: " + edgeList);
 
     }
 
-    public LinkedList<Edge> getAdjacencyList() {
+    public LinkedList<Edge> getEdgeList() {
+        return edgeList;
+    }
+
+    public ArrayList<String> getVerticesList() {
+        return verticesList;
+    }
+
+    public Hashtable<String, List<String>> getAdjacencyList() {
         return adjacencyList;
     }
 
@@ -111,8 +143,15 @@ public class ReadFiles {
         readFiles.attractions();
         readFiles.roads();
 
+        ArrayList attractions = new ArrayList();
+        attractions.add("Disney World");
+        attractions.add("Statue of Liberty");
 
-        Dijkstra dijkstra = new Dijkstra();
+        Dijkstra dijkstra = new Dijkstra(readFiles.verticesList, readFiles.edgeList, readFiles.adjacencyList, readFiles.attractionsHashTable);
+        System.out.println();
+        System.out.println("Path: " + dijkstra.route("Abilene TX", "Portland OR", attractions).toString());
+
+        //Dijkstra dijkstra = new Dijkstra();
         //dijkstra.
 
         // create a new list by calling the dijkstras
