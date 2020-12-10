@@ -5,6 +5,9 @@ import java.io.*;
 
 import static java.lang.System.exit;
 
+/**
+ * Dijkstra Class:
+ */
 public class Dijkstra {
 
     ReadFiles readFiles = new ReadFiles();
@@ -18,8 +21,13 @@ public class Dijkstra {
     LinkedList<ReadFiles.Edge> edgeList = new LinkedList<ReadFiles.Edge>();
     Hashtable<String, List<String>> adjacencyList = new Hashtable<String, List<String>>();
 
-
-
+    /**
+     * Constructor to assign values
+     * @param verticesList
+     * @param edgeList
+     * @param adjacencyList
+     * @param attractionsList
+     */
     public Dijkstra(ArrayList<String> verticesList, LinkedList<ReadFiles.Edge> edgeList, Hashtable<String, List<String>> adjacencyList, Hashtable<String, String> attractionsList) {
         this.verticesList = verticesList;
         this.edgeList = edgeList;
@@ -27,6 +35,10 @@ public class Dijkstra {
         this.attractionsList = attractionsList;
     }
 
+    /**
+     * gets the minimum distance between locations
+     * @return
+     */
     public String minDistance() {
         int min = Integer.MAX_VALUE;
         String min_index = "";
@@ -41,11 +53,23 @@ public class Dijkstra {
         return min_index;
     }
 
+    /**
+     * makes unknown vertices known (False -> True)
+     * @param location
+     */
     public void known(String location) {
         visited.put(location, true);
     }
 
 
+    /**
+     * Gets the route for the starting, ending city, and attractions
+     * It gets the list of vertices in the verticesList and adds it to the path, if its the shortest path to get to the next location
+     * @param starting_city
+     * @param ending_city
+     * @param attractions
+     * @return
+     */
     List<String> route(String starting_city, String ending_city, List<String> attractions) {
 
         ArrayList<String> cities = new ArrayList<String>();
@@ -139,7 +163,7 @@ public class Dijkstra {
             }
         }
 
-        System.out.println("Total Miles: " + milesTotal);
+        // System.out.println("Total Miles: " + milesTotal);
         return cities;
     }
 }
